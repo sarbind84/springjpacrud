@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>List Employees</title>
+
+<!-- style lib for jquery data tables -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jq-3.6.0/dt-1.11.5/datatables.min.css"/>
+ 
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jq-3.6.0/dt-1.11.5/datatables.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+
+	<div class="container">
+		<h2>List Employees</h2>
+		</hr>
+		
+		<a th:href="@{/addEmployeeForm}" class="btn btn-primary mb-2">Add Employee</a>
+		
+		<table id="employeeTable" border="1" class="table table-bordered table-striped">
+		<thead>
+		
+		<tr>
+			<th>Name</th>
+			<th>Email</th>
+			<th>Department</th>
+			<th>Actions</th>
+		 
+		</tr>
+		</thead>
+		
+		
+		<tbody>
+		
+		<!-- employee is local variable -->
+		<!-- employees is data sent from controller -->
+		<tr th:each="employee: ${employees}">
+			<td th:text="${employee.name}"></td>
+			<td th:text="${employee.email}"></td>
+			<td th:text="${employee.department}"></td>
+			
+			<!-- @{/url(variable=${object.value})} -->
+			<td><a th:href="@{/showUpdateForm(employeeId=${employee.id})}" class="btn btn-info">Update</a>
+		<a th:href="@{/deleteEmployee(employeeId=${employee.id})}" class="btn btn-danger ml-2">Delete</a></td>
+		
+		</tr>
+		
+		</tbody>
+		
+		</table>
+	
+	</div>
+
+<!-- datatable j query and need query link lib as well -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.js"></script>
+		
+<script>
+			$(document).ready(function() {
+				
+				//#table id selector
+				//datatable is jquery data table function
+				//
+				$("#employeeTable").DataTable({
+					//bsortable false to specify index coloumn
+						'aoColumnDefs': [{
+        				'bSortable': false,
+        				'aTargets': [-1] /* 1st one, start by the right */
+    				}]
+				});
+			})
+		</script>
+
+
+</body>
+</html>
